@@ -1,4 +1,4 @@
-function run_optimization(data_path, baseMVA, beta, gamma, cf, lf)
+function run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
 
     bus_data = CSV.read(string(data_path,"bus_data.csv"), DataFrame) |> Matrix;
     (num_busses, var) = size(bus_data);
@@ -85,7 +85,7 @@ function run_optimization(data_path, baseMVA, beta, gamma, cf, lf)
     c_var = 2.76;
 
     pi_s = 1/S;
-    @objective(model, Min, sum(c_var*y[i] for i in 1:num_busses) +
+    @objective(model, Min, alpha*sum(c_var*y[i] for i in 1:num_busses) +
                             beta*pi_s*sum(VP[s] for s in 1:S) +
                             gamma*pi_s*sum(Ploss[i,s] for i in 1:num_busses, s in 1:S))
 
