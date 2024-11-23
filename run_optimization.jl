@@ -10,6 +10,7 @@ function run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
     (num_branches, var) = size(branch_data)
     G = CSV.read(string(data_path,"G_mat.csv"), DataFrame) |> Matrix;
     B = CSV.read(string(data_path,"B_mat.csv"), DataFrame)|> Matrix;
+    
     #number of scenarios
     S  = length(cf);
 
@@ -44,8 +45,6 @@ function run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
 
     model = Model(Ipopt.Optimizer)
 
-    #Number of scenarios
-    S = 100;
 
     @variable(model, V[1:num_busses, 1:S] >= 0)
     @variable(model, theta[1:num_busses, 1:S])
