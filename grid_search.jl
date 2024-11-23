@@ -8,7 +8,6 @@ function grid_search(step_size, data_path, baseMVA, cf, lf)
             if gamma >= 0  # Ensure the constraint is satisfied
                 # Calculate the objective cost
                 cost, capacity = run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
-                # Append the results to the DataFrame
                 push!(results, (alpha, beta, gamma, cost))
             end
         end
