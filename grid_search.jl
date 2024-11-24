@@ -1,5 +1,11 @@
 function grid_search(step_size, data_path, baseMVA, cf, lf)
+    bus_data = CSV.read(string(data_path,"bus_data.csv"), DataFrame) |> Matrix
+    num_busses = size(bus_data)[1]
+
     results = DataFrame(alpha=Float64[], beta=Float64[], gamma=Float64[], objective_cost=Float64[])
+    for i in 1:num_busses
+        results[!, "pv_bus_$i"] = Float64[]
+    end
 
     # Iterate over possible values of alpha and beta
     for alpha in 0:step_size:1
@@ -8,7 +14,7 @@ function grid_search(step_size, data_path, baseMVA, cf, lf)
             if gamma >= 0  # Ensure the constraint is satisfied
                 # Calculate the objective cost
                 cost, capacity = run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
-                push!(results, (alpha, beta, gamma, cost))
+                push!(results, (alpha, beta, gamma, cost, capacity...))
             end
         end
     end

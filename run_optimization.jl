@@ -45,11 +45,6 @@ function run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
 
     model = Model(Ipopt.Optimizer)
 
-<<<<<<< HEAD
-=======
-    #Number of scenarios
-    #S = 100;
->>>>>>> cd3ae384947bbce046efb961e3ac4d8dd84a075c
 
     @variable(model, V[1:num_busses, 1:S] >= 0)
     @variable(model, theta[1:num_busses, 1:S])
