@@ -90,5 +90,14 @@ function run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
 
     optimize!(model)
 
-    return objective_value(model), JuMP.value.(y)
+    Y = JuMP.value.(y)
+    vp = JuMP.value.(VP)
+    ploss = JuMP.value.(Ploss)
+
+    obj = objective_value(model)
+    obj_inv = sum(c_var*Y[i] for i in 1:num_busses)
+    obj_V = pi_s*sum(vp[s] for s in 1:S)
+    obj_Ploss = pi_s*sum(ploss[i,s] for i in 1:num_busses, s in 1:S)
+
+    return obj,obj_inv, obj_V, obj_Ploss, Y
 end
