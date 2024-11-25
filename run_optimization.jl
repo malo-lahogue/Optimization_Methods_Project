@@ -99,5 +99,18 @@ function run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
     obj_V = pi_s*sum(vp[s] for s in 1:S)
     obj_Ploss = pi_s*sum(ploss[i,s] for i in 1:num_busses, s in 1:S)
 
-    return obj,obj_inv, obj_V, obj_Ploss, Y
+    return alpha, beta, gamma, obj,obj_inv, obj_V, obj_Ploss, Y
 end
+
+
+
+using Dates
+
+start_time = now()
+
+alpha, beta, gamma, cost, obj_inv, obj_V, obj_Ploss, capacity = run_optimization(data_path, baseMVA, alpha, beta, gamma, cf, lf)
+
+end_time = now()
+execution_time = end_time - start_time
+println("Execution time: ", execution_time)
+
